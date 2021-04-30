@@ -1,0 +1,1 @@
+tests["Body contains status 0 "] = responseBody.has('"status":0'); 
