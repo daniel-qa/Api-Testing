@@ -1,0 +1,41 @@
+
+import java.util.Date;
+import java.util.*;
+import java.text.*;
+import org.apache.commons.httpclient.auth.DigestScheme; // necessary imports
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.jmeter.protocol.http.control.Header;
+
+// ApiKey
+String ApiKey = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+
+log.info("\n\n  test 1  \n\n ");
+
+log.info( "\n\n ApiKey :" + ApiKey + "\n\n" );
+
+log.info("\n\n  test 2 \n\n ");
+Date date = new Date();
+log.info( "\n\n Date : " +  date + "\n\n");
+
+// 時間 yyyy-MM-dd
+DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+date2 = dateFormat.format(date);
+log.info( "\n\n Date2 : " +  date2 + "\n\n");
+
+log.info("\n \n habook test 3  \n\n");
+
+// hash 編碼
+//String hmacSha256 = org.apache.commons.codec.digest.HmacUtils.hmacSha256Hex("key", "value"); 
+String hmacSha256 = org.apache.commons.codec.digest.HmacUtils.hmacSha256Hex(date2,ApiKey); 
+log.info("\n\n hmacSha256 : " + hmacSha256 + "\n\n");
+
+log.info("\n \n habook test 4  \n \n");
+
+//var.put("hmacSha256" ,hmacSha256);
+
+//加入header
+sampler.getHeaderManager().add(new Header("X-Auth-Hash", hmacSha256)); 
+
+
+
